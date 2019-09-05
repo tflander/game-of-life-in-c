@@ -53,3 +53,7 @@ This will link the new source files to our generated `make` files
 For our example we are using the [Unity](https://github.com/ThrowTheSwitch/Unity) testing suite.  Their documentation is excellent, and we strongly encourage you to read it.
 
 If you need to update the test suite you can run the `source-library.sh` in the test folder.  It will download the latest version of the test suite for you and install it to the test folder.
+
+## Further Exploration
+
+If you enjoyed this lab, try our more advanced lab, [esp32 Phone Booth](https://github.com/PillarTechnology/phonebooth-esp-idf).
