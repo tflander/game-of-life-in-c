@@ -25,3 +25,15 @@ This should generate a long string of text.
     ~/workspace/life/build $ make && test/game-of-life-test
 
 This should generate a very nice looking build message, and provided that your build was successful, run your tests.
+
+### When You Add New Files
+
+If you add new files
+
+    cmake ..
+
+## Testing Tools
+
+For our example we are using the [Unity](https://github.com/ThrowTheSwitch/Unity) testing suite.  Their documentation is excellent, and we strongly encourage you to read it.
+
+If you need to update the test suite you can run the `source-library.sh` in the test folder.  It will download the latest version of the test suite for you and install it to the test folder.
