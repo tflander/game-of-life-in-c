@@ -1,5 +1,6 @@
 #include "rules.h"
 #include <stdio.h>
+#include <string.h>
 
 bool cell_alive(bool alive_now, int neighbors)
 {
@@ -9,12 +10,12 @@ bool cell_alive(bool alive_now, int neighbors)
         return neighbors == 3;
 }
 
-void tick(char* data, int numCols, int numRows) {
-    char update[numCols][numRows];
-    for(int c = 0; c < numCols; ++c) {
-        for(int r = 0; r < numRows; ++r) {
-            int n = count_neighbors(data, numCols, numRows, c, r);
-            bool aliveNow = isAlive(data, numRows, c, r);
+void tick(struct Grid grid) {
+    char update[grid.numCols][grid.numRows];
+    for(int c = 0; c < grid.numCols; ++c) {
+        for(int r = 0; r < grid.numRows; ++r) {
+            int n = count_neighbors(grid, c, r);
+            bool aliveNow = isAlive(grid.data, grid.numRows, c, r);
             if(cell_alive(aliveNow, n)) {
                 update[c][r] = 'X';
             } else {
@@ -22,7 +23,7 @@ void tick(char* data, int numCols, int numRows) {
             }
         }
     }
-    memcpy(data, &update, sizeof(char)*numRows*numRows);
+    memcpy(grid.data, &update, sizeof(char) * grid.numRows * grid.numRows);
 }
 
 bool isAlive(char* data, int numRows, int col, int row) {
@@ -38,12 +39,12 @@ bool inGrid(int c, int r, int numCols, int numRows) {
     return c > -1 && r > -1 && c < numCols && r < numRows;
 }
 
-int count_neighbors(char* data, int numCols, int numRows, int col, int row) {
+int count_neighbors(struct Grid grid, int col, int row) {
     int count = 0;
     for (int c = col - 1; c <= col + 1; ++c) {
         for (int r = row - 1; r <= row + 1; ++r) {
-            if(notMe(c,r,col,row) && inGrid(c, r, numCols, numRows)) {
-                char x = *((data+c*numRows) + r);
+            if(notMe(c,r,col,row) && inGrid(c, r, grid.numCols, grid.numRows)) {
+                char x = *((grid.data+c*grid.numRows) + r);
                 if(x == 'X') {
                     ++count;
                 }
@@ -53,13 +54,12 @@ int count_neighbors(char* data, int numCols, int numRows, int col, int row) {
     return count;
 }
 
-void print(char* data, int numCols, int numRows) 
-{ 
+void print(struct Grid grid) {
     int c, r; 
     printf("\n");
-    for (r = 0; r < numRows; r++) {
-        for (c = 0; c < numCols; c++) {
-            char x = *((data+c*numRows) + r);
+    for (r = 0; r < grid.numRows; r++) {
+        for (c = 0; c < grid.numCols; c++) {
+            char x = *((grid.data+c*grid.numRows) + r);
             if (x == ' ') {
                 x = '.';
             }
@@ -67,17 +67,18 @@ void print(char* data, int numCols, int numRows)
         }
         printf("\n");
     }
-} 
+}
 
-void wipeGrid(char* data, int numCols, int numRows) {
-    for(int c = 0; c < numCols; ++c) {
-        for(int r = 0; r < numRows; ++r) {
-            *((data+c*numRows) + r) = ' ';
+
+void wipeGrid(struct Grid grid) {
+    for(int c = 0; c < grid.numCols; ++c) {
+        for(int r = 0; r < grid.numRows; ++r) {
+            *((grid.data +c*grid.numRows) + r) = ' ';
         }
     }
 }
 
-void setLivingCell(char* data, int numRows, int col, int row) {
-    *((data+col*numRows) + row) = 'X';
+void setLivingCell(struct Grid grid, int col, int row) {
+    *((grid.data + col * grid.numRows) + row) = 'X';
 }
 

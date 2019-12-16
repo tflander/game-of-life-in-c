@@ -3,12 +3,18 @@
 
 #include <stdbool.h>
 
+struct Grid {
+    char* data;
+    int numCols;
+    int numRows;
+};
+
 bool cell_alive(bool alive_now, int neighbors);
-int count_neighbors(char* data, int numCols, int numRows, int col, int row);
-void wipeGrid(char* data, int numCols, int numRows);
-void print(char* data, int numCols, int numRows);
-void setLivingCell(char* data, int numRows, int col, int row);
-void tick(char* data, int numCols, int numRows);
+void setLivingCell(struct Grid grid, int col, int row);
 bool isAlive(char* data, int numRows, int col, int row);
+void wipeGrid(struct Grid grid);
+void print(struct Grid grid);
+int count_neighbors(struct Grid grid, int col, int row);
+void tick(struct Grid grid);
 
 #endif
