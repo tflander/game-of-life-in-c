@@ -26,6 +26,16 @@ TEST(Grid, create_empty_grid) {
     }
 }
 
+TEST(Grid, set_grid_cell) {
+    int numCols = 4;
+    int numRows = 3;
+    char gridData[numCols][numRows];
+    wipeGrid((char*)gridData, numCols, numRows);
+    setLivingCell((char*)gridData, numRows, 1,2);
+    print((char*)gridData, numCols, numRows);
+    TEST_ASSERT_EQUAL('X', gridData[1][2]);
+}
+
 TEST(Neighbors, has_one_neighbor) {
    TEST_ASSERT_EQUAL(1, count_neighbors(0,0));
 }
@@ -67,6 +77,8 @@ TEST_GROUP_RUNNER(Rules)
     RUN_TEST_CASE(Rules, dead_cell_with_two_neighbors_stays_dead);
 
     RUN_TEST_CASE(Grid, create_empty_grid);
+    RUN_TEST_CASE(Grid, set_grid_cell);
+    
     // TODO: not ready
     // RUN_TEST_CASE(Neighbors, has_one_neighbor);
     

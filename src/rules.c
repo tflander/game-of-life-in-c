@@ -13,18 +13,19 @@ int count_neighbors(int col, int row) {
     return 0;
 }
 
-void print(char* arr, int numCols, int numRows) 
+void print(char* data, int numCols, int numRows) 
 { 
     int c, r; 
-    for (c = 0; c < numCols; c++) {
-      for (r = 0; r < numRows; r++) {
-        char x = *((arr+c*numRows) + r);
-        if (x == ' ') {
-            x = '.';
+    printf("\n");
+    for (r = 0; r < numRows; r++) {
+        for (c = 0; c < numCols; c++) {
+            char x = *((data+c*numRows) + r);
+            if (x == ' ') {
+                x = '.';
+            }
+            printf("%c ", x); 
         }
-        printf("%c ", x); 
-      }
-      printf("\n");
+        printf("\n");
     }
 } 
 
@@ -35,3 +36,8 @@ void wipeGrid(char* data, int numCols, int numRows) {
         }
     }
 }
+
+void setLivingCell(char* data, int numRows, int col, int row) {
+    *((data+col*numRows) + row) = 'X';
+}
+
