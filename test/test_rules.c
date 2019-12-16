@@ -32,8 +32,18 @@ TEST(Grid, set_grid_cell) {
 
 TEST(Grid, middle_cell_has_one_living_neighbor) {
     setLivingCell((char*)gridData, numRows, 0, 0);
-    print((char*)gridData, numCols, numRows);
-    TEST_ASSERT_EQUAL(1, count_neighbors((char*)gridData, numRows, 1, 1));
+    TEST_ASSERT_EQUAL(1, count_neighbors((char*)gridData, numCols, numRows, 1, 1));
+}
+
+TEST(Grid, top_left_cell_has_one_living_neighbor) {
+    setLivingCell((char*)gridData, numRows, 0, 1);
+    TEST_ASSERT_EQUAL(1, count_neighbors((char*)gridData, numCols, numRows, 0, 0));
+}
+
+TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
+    setLivingCell((char*)gridData, numRows, 3, 1);
+    // print((char*)gridData, numCols, numRows);
+    TEST_ASSERT_EQUAL(1, count_neighbors((char*)gridData, numCols, numRows, 3, 2));
 }
 
 TEST(Rules, live_cell_with_fewer_than_two_neighbors_dies)
@@ -74,7 +84,14 @@ TEST_GROUP_RUNNER(Rules)
 
     RUN_TEST_CASE(Grid, create_empty_grid);
     RUN_TEST_CASE(Grid, set_grid_cell);
-    
-    RUN_TEST_CASE(Grid, middle_cell_has_one_living_neighbor);
-    
+    RUN_TEST_CASE(Grid, middle_cell_has_one_living_neighbor);    
+    RUN_TEST_CASE(Grid, top_left_cell_has_one_living_neighbor);
+    RUN_TEST_CASE(Grid, bottom_right_cell_has_one_living_neighbor);
+
+    // RUN_TEST_CASE(Grid, live_cell_with_fewer_than_two_neighbors_dies);
+    // RUN_TEST_CASE(Grid, live_cell_with_two_or_three_neighbors_survives);
+    // RUN_TEST_CASE(Grid, live_cell_with_more_than_three_neighbors_dies);
+    // RUN_TEST_CASE(Grid, dead_cell_with_three_neighbors_becomes_live);
+    // RUN_TEST_CASE(Grid, dead_cell_with_two_neighbors_stays_dead);
+
 }

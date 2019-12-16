@@ -9,11 +9,19 @@ bool cell_alive(bool alive_now, int neighbors)
         return neighbors == 3;
 }
 
-int count_neighbors(char* data, int numRows, int col, int row) {
+bool notMe(int c, int r, int col, int row) {
+    return r != row || c != col;
+}
+
+bool inGrid(int c, int r, int numCols, int numRows) {
+    return c > -1 && r > -1 && c < numCols && r < numRows;
+}
+
+int count_neighbors(char* data, int numCols, int numRows, int col, int row) {
     int count = 0;
     for (int c = col - 1; c <= col + 1; ++c) {
         for (int r = row - 1; r <= row + 1; ++r) {
-            if(r != row || c != col) {
+            if(notMe(c,r,col,row) && inGrid(c, r, numCols, numRows)) {
                 char x = *((data+c*numRows) + r);
                 if(x == 'X') {
                     ++count;
