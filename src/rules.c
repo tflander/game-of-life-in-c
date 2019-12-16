@@ -82,3 +82,19 @@ void setLivingCell(struct Grid grid, int col, int row) {
     *((grid.data + col * grid.numRows) + row) = 'X';
 }
 
+void setDeadCell(struct Grid grid, int col, int row) {
+    *((grid.data + col * grid.numRows) + row) = 'X';
+}
+
+void setRow(struct Grid grid, int row, char* columns) {
+    int numColsToSet = strlen(columns);
+    for (int c = 0; c < numColsToSet; ++c) {
+        char mark = columns[c];
+        if(mark == 'X') {
+            setLivingCell(grid, c, row);
+        } else {
+            setDeadCell(grid, c, row);
+        }
+    }
+}
+

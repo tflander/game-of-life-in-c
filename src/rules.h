@@ -11,6 +11,8 @@ struct Grid {
 
 bool cell_alive(bool alive_now, int neighbors);
 void setLivingCell(struct Grid grid, int col, int row);
+void setRow(struct Grid grid, int row, char* columns);
+
 bool isAlive(char* data, int numRows, int col, int row);
 void wipeGrid(struct Grid grid);
 void print(struct Grid grid);

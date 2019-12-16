@@ -57,9 +57,8 @@ TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
 
 TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
 {
-    setLivingCell(grid, 0, 0);
-    setLivingCell(grid, 0, 1);
-    setLivingCell(grid, 1, 0);
+    setRow(grid, 0, "XX");
+    setRow(grid, 1, "X ");
     tick(grid);
     TEST_ASSERT_TRUE(isAlive((char*)gridData, numRows, 0, 0));
 }
