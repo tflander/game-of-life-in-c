@@ -7,13 +7,10 @@ const int numRows = 3;
 char gridData[numCols][numRows];
 
 TEST_GROUP(Rules);
-TEST_GROUP(Neighbors);
 TEST_GROUP(Grid);
 
 TEST_SETUP(Rules) {}
 TEST_TEAR_DOWN(Rules) {}
-TEST_SETUP(Neighbors) {}
-TEST_TEAR_DOWN(Neighbors) {}
 TEST_SETUP(Grid) {
     wipeGrid((char*)gridData, numCols, numRows);
 }
@@ -30,12 +27,13 @@ TEST(Grid, create_empty_grid) {
 
 TEST(Grid, set_grid_cell) {
     setLivingCell((char*)gridData, numRows, 1,2);
-    print((char*)gridData, numCols, numRows);
     TEST_ASSERT_EQUAL('X', gridData[1][2]);
 }
 
-TEST(Neighbors, has_one_neighbor) {
-   TEST_ASSERT_EQUAL(1, count_neighbors(0,0));
+TEST(Grid, middle_cell_has_one_living_neighbor) {
+    setLivingCell((char*)gridData, numRows, 0, 0);
+    print((char*)gridData, numCols, numRows);
+    TEST_ASSERT_EQUAL(1, count_neighbors((char*)gridData, numRows, 1, 1));
 }
 
 TEST(Rules, live_cell_with_fewer_than_two_neighbors_dies)
@@ -77,7 +75,6 @@ TEST_GROUP_RUNNER(Rules)
     RUN_TEST_CASE(Grid, create_empty_grid);
     RUN_TEST_CASE(Grid, set_grid_cell);
     
-    // TODO: not ready
-    // RUN_TEST_CASE(Neighbors, has_one_neighbor);
+    RUN_TEST_CASE(Grid, middle_cell_has_one_living_neighbor);
     
 }

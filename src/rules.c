@@ -9,8 +9,19 @@ bool cell_alive(bool alive_now, int neighbors)
         return neighbors == 3;
 }
 
-int count_neighbors(int col, int row) {
-    return 0;
+int count_neighbors(char* data, int numRows, int col, int row) {
+    int count = 0;
+    for (int c = col - 1; c <= col + 1; ++c) {
+        for (int r = row - 1; r <= row + 1; ++r) {
+            if(r != row || c != col) {
+                char x = *((data+c*numRows) + r);
+                if(x == 'X') {
+                    ++count;
+                }
+            }
+        }
+    }
+    return count;
 }
 
 void print(char* data, int numCols, int numRows) 
