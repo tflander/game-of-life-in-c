@@ -44,7 +44,6 @@ TEST(Grid, top_left_cell_has_one_living_neighbor) {
 
 TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
     setLivingCell(grid, 3, 1);
-    print(grid);
     TEST_ASSERT_EQUAL(1, count_neighbors(grid, 3, 2));
 }
 
@@ -65,29 +64,24 @@ TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
 
 TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
 {
-    setLivingCell(grid, 0, 0);
-    setLivingCell(grid, 0, 1);
-    setLivingCell(grid, 1, 0);
-    setLivingCell(grid, 1, 1);
-    setLivingCell(grid, 2, 0);
-    setLivingCell(grid, 2, 1);
+    setRow(grid, 0, "XXX");
+    setRow(grid, 1, "XXX");
     tick(grid);
     TEST_ASSERT_FALSE(isAlive((char*)gridData, numRows, 1, 0));
 }
 
 TEST(Grid, dead_cell_with_three_neighbors_becomes_live)
 {
-    setLivingCell(grid, 0, 0);
-    setLivingCell(grid, 0, 1);
-    setLivingCell(grid, 1, 1);
+    setRow(grid, 0, "X");
+    setRow(grid, 1, "XX");
     tick(grid);
     TEST_ASSERT_TRUE(isAlive((char*)gridData, numRows, 1, 0));
 }
 
 TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
 {
-    setLivingCell(grid, 0, 0);
-    setLivingCell(grid, 0, 1);
+    setRow(grid, 0, "X");
+    setRow(grid, 1, "X");
     tick(grid);
     TEST_ASSERT_FALSE(isAlive((char*)gridData, numRows, 1, 0));
 }
