@@ -9,6 +9,27 @@ bool cell_alive(bool alive_now, int neighbors)
         return neighbors == 3;
 }
 
+void tick(char* data, int numCols, int numRows) {
+    char update[numCols][numRows];
+    for(int c = 0; c < numCols; ++c) {
+        for(int r = 0; r < numRows; ++r) {
+            int n = count_neighbors(data, numCols, numRows, c, r);
+            bool aliveNow = isAlive(data, numRows, c, r);
+            if(cell_alive(aliveNow, n)) {
+                update[c][r] = 'X';
+            } else {
+                update[c][r] = ' ';
+            }
+        }
+    }
+    memcpy(data, &update, sizeof(char)*numRows*numRows);
+}
+
+bool isAlive(char* data, int numRows, int col, int row) {
+    char x = *((data+ col * numRows) + row);
+    return x == 'X';
+}
+
 bool notMe(int c, int r, int col, int row) {
     return r != row || c != col;
 }
