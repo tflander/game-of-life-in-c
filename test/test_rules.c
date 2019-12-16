@@ -56,32 +56,39 @@ TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
 
 TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
 {
-    setRow(grid, 0, "XX");
-    setRow(grid, 1, "X ");
+    setGrid(grid, 2,
+        "XX",
+        "X "
+    );
     tick(grid);
     TEST_ASSERT_TRUE(isAlive((char*)gridData, numRows, 0, 0));
 }
 
 TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
 {
-    setRow(grid, 0, "XXX");
-    setRow(grid, 1, "XXX");
+    setGrid(grid, 2,
+        "XXX",
+        "XXX"
+    );
     tick(grid);
     TEST_ASSERT_FALSE(isAlive((char*)gridData, numRows, 1, 0));
 }
 
 TEST(Grid, dead_cell_with_three_neighbors_becomes_live)
 {
-    setRow(grid, 0, "X");
-    setRow(grid, 1, "XX");
+   setGrid(grid, 2,
+        "X",
+        "XX"
+    );
     tick(grid);
     TEST_ASSERT_TRUE(isAlive((char*)gridData, numRows, 1, 0));
 }
 
 TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
 {
-    setRow(grid, 0, "X");
-    setRow(grid, 1, "X");
+    setGrid(grid, 1,
+        "XX"
+    );
     tick(grid);
     TEST_ASSERT_FALSE(isAlive((char*)gridData, numRows, 1, 0));
 }

@@ -1,6 +1,7 @@
 #include "rules.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
 bool cell_alive(bool alive_now, int neighbors)
 {
@@ -96,5 +97,19 @@ void setRow(struct Grid grid, int row, char* columns) {
             setDeadCell(grid, c, row);
         }
     }
+}
+
+void setGrid(struct Grid grid, int numRows, ...) {
+    va_list ap; 
+
+    va_start(ap, numRows); 
+  
+    for (int r = 0; r < numRows; ++r) {
+        char* row = va_arg(ap, char*); 
+        setRow(grid, r, row);
+    }
+  
+    va_end(ap); 
+  
 }
 
