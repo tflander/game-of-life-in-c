@@ -2,6 +2,10 @@
 #include <unity_fixture.h>
 #include "rules.h"
 
+const int numCols = 4;
+const int numRows = 3;
+char gridData[numCols][numRows];
+
 TEST_GROUP(Rules);
 TEST_GROUP(Neighbors);
 TEST_GROUP(Grid);
@@ -10,14 +14,12 @@ TEST_SETUP(Rules) {}
 TEST_TEAR_DOWN(Rules) {}
 TEST_SETUP(Neighbors) {}
 TEST_TEAR_DOWN(Neighbors) {}
-TEST_SETUP(Grid) {}
+TEST_SETUP(Grid) {
+    wipeGrid((char*)gridData, numCols, numRows);
+}
 TEST_TEAR_DOWN(Grid) {}
 
 TEST(Grid, create_empty_grid) {
-    int numCols = 4;
-    int numRows = 3;
-    char gridData[numCols][numRows];
-    wipeGrid((char*)gridData, numCols, numRows);
 
     for(int c = 0; c < numCols; ++c) {
        for(int r = 0; r < numRows; ++r) {
@@ -27,10 +29,6 @@ TEST(Grid, create_empty_grid) {
 }
 
 TEST(Grid, set_grid_cell) {
-    int numCols = 4;
-    int numRows = 3;
-    char gridData[numCols][numRows];
-    wipeGrid((char*)gridData, numCols, numRows);
     setLivingCell((char*)gridData, numRows, 1,2);
     print((char*)gridData, numCols, numRows);
     TEST_ASSERT_EQUAL('X', gridData[1][2]);
