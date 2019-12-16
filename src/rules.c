@@ -16,7 +16,7 @@ void tick(struct Grid grid) {
     for(int c = 0; c < grid.numCols; ++c) {
         for(int r = 0; r < grid.numRows; ++r) {
             int n = count_neighbors(grid, c, r);
-            bool aliveNow = isAlive(grid.data, grid.numRows, c, r);
+            bool aliveNow = isAlive(grid, c, r);
             if(cell_alive(aliveNow, n)) {
                 update[c][r] = 'X';
             } else {
@@ -27,8 +27,8 @@ void tick(struct Grid grid) {
     memcpy(grid.data, &update, sizeof(char) * grid.numRows * grid.numRows);
 }
 
-bool isAlive(char* data, int numRows, int col, int row) {
-    char x = *((data+ col * numRows) + row);
+bool isAlive(struct Grid grid, int col, int row) {
+    char x = *((grid.data + col * grid.numRows) + row);
     return x == 'X';
 }
 
@@ -84,7 +84,7 @@ void setLivingCell(struct Grid grid, int col, int row) {
 }
 
 void setDeadCell(struct Grid grid, int col, int row) {
-    *((grid.data + col * grid.numRows) + row) = 'X';
+    *((grid.data + col * grid.numRows) + row) = ' ';
 }
 
 void setRow(struct Grid grid, int row, char* columns) {
@@ -99,17 +99,25 @@ void setRow(struct Grid grid, int row, char* columns) {
     }
 }
 
-void setGrid(struct Grid grid, int numRows, ...) {
+void setGrid(struct Grid grid, ...) {
     va_list ap; 
-
-    va_start(ap, numRows); 
+    va_start(ap, grid); 
   
-    for (int r = 0; r < numRows; ++r) {
+    for (int r = 0; r < grid.numRows; ++r) {
         char* row = va_arg(ap, char*); 
         setRow(grid, r, row);
     }
   
     va_end(ap); 
-  
 }
 
+void rowAsString(char* buffer, struct Grid grid, int rowIndex) {
+    buffer[grid.numCols + 1] = 0;
+    for (int c = 0; c < grid.numCols; ++c) {
+        if(isAlive(grid, c, rowIndex)) {
+            buffer[c] = 'X';
+        } else {
+            buffer[c] = '.';
+        }
+    }
+}

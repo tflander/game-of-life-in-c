@@ -1,5 +1,8 @@
 #include <stdbool.h>
 #include <unity_fixture.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 #include "rules.h"
 
 const int numCols = 4;
@@ -7,6 +10,7 @@ const int numRows = 3;
 char gridData[numCols][numRows];
 
 struct Grid grid = {(char*)gridData, numCols, numRows};
+void verifyGrid(struct Grid grid, ...);
 
 TEST_GROUP(Rules);
 TEST_GROUP(Grid);
@@ -51,46 +55,81 @@ TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
 {
     setLivingCell(grid, 0, 0);
     tick(grid);
-    TEST_ASSERT_FALSE(isAlive((char*)gridData, numRows, 0, 0));
+    TEST_ASSERT_FALSE(isAlive(grid, 0, 0));
 }
 
 TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
 {
-    setGrid(grid, 2,
-        "XX",
-        "X "
+    setGrid(grid,
+        "XX  ",
+        "X   ",
+        "    "
     );
     tick(grid);
-    TEST_ASSERT_TRUE(isAlive((char*)gridData, numRows, 0, 0));
+    TEST_ASSERT_TRUE(isAlive(grid, 0, 0));
 }
 
 TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
 {
-    setGrid(grid, 2,
-        "XXX",
-        "XXX"
+    setGrid(grid,
+        "XXX.",
+        "XXX.",
+        "...."
     );
+    
     tick(grid);
-    TEST_ASSERT_FALSE(isAlive((char*)gridData, numRows, 1, 0));
+    
+    verifyGrid(grid,
+        "X.X.",
+        "X.X.",
+        ".X.."
+    );
+    TEST_ASSERT_FALSE(isAlive(grid, 1, 0));
 }
+
+void verifyRow(struct Grid grid, int rowIndex, char* expected) {
+    char actual[grid.numCols + 1];
+    rowAsString(actual, grid, rowIndex);
+    if(0 != strcmp(expected, actual)) {
+        char msg[255];
+        sprintf(msg, "Error in row %d.  Expected %s, found %s", rowIndex, expected, actual);
+        TEST_FAIL_MESSAGE(msg);
+    }
+}
+
+void verifyGrid(struct Grid grid, ...) {
+    va_list ap; 
+    va_start(ap, grid); 
+  
+    for (int r = 0; r < grid.numRows; ++r) {
+        char* row = va_arg(ap, char*); 
+        verifyRow(grid, r, row);
+    }
+  
+    va_end(ap); 
+}
+
 
 TEST(Grid, dead_cell_with_three_neighbors_becomes_live)
 {
-   setGrid(grid, 2,
-        "X",
-        "XX"
+   setGrid(grid,
+        "X   ",
+        "XX  ",
+        "    "
     );
     tick(grid);
-    TEST_ASSERT_TRUE(isAlive((char*)gridData, numRows, 1, 0));
+    TEST_ASSERT_TRUE(isAlive(grid, 1, 0));
 }
 
 TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
 {
-    setGrid(grid, 1,
-        "XX"
+    setGrid(grid,
+        "XX  ",
+        "    ",
+        "    "
     );
     tick(grid);
-    TEST_ASSERT_FALSE(isAlive((char*)gridData, numRows, 1, 0));
+    TEST_ASSERT_FALSE(isAlive(grid, 1, 0));
 }
 
 TEST(Rules, live_cell_with_fewer_than_two_neighbors_dies)
