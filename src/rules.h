@@ -9,11 +9,16 @@ struct Grid {
     int numRows;
 };
 
+struct Point {
+    int x;
+    int y;
+};
+
 bool cell_alive(bool alive_now, int neighbors);
 void setLivingCell(struct Grid grid, int col, int row);
 void setRow(struct Grid grid, int row, char* columns);
 void setGrid(struct Grid grid, ...);
-bool isAlive(struct Grid grid, int col, int row);
+bool isAlive(struct Grid grid, struct Point point);
 void wipeGrid(struct Grid grid);
 void print(struct Grid grid);
 int count_neighbors(struct Grid grid, int col, int row);

@@ -55,7 +55,8 @@ TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
 {
     setLivingCell(grid, 0, 0);
     tick(grid);
-    TEST_ASSERT_FALSE(isAlive(grid, 0, 0));
+    TEST_ASSERT_FALSE(isAlive(grid, (struct Point){0, 0}));
+
 }
 
 TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
@@ -66,7 +67,7 @@ TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
         "    "
     );
     tick(grid);
-    TEST_ASSERT_TRUE(isAlive(grid, 0, 0));
+    TEST_ASSERT_TRUE(isAlive(grid, (struct Point){0, 0}));
 }
 
 TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
@@ -84,7 +85,7 @@ TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
         "X.X.",
         ".X.."
     );
-    TEST_ASSERT_FALSE(isAlive(grid, 1, 0));
+    TEST_ASSERT_FALSE(isAlive(grid, (struct Point){.x=1, .y=0}));
 }
 
 TEST(Grid, dead_cell_with_three_neighbors_becomes_live)
@@ -95,7 +96,8 @@ TEST(Grid, dead_cell_with_three_neighbors_becomes_live)
         "    "
     );
     tick(grid);
-    TEST_ASSERT_TRUE(isAlive(grid, 1, 0));
+    TEST_ASSERT_TRUE(isAlive(grid, (struct Point){1, 0}));
+
 }
 
 TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
@@ -106,7 +108,7 @@ TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
         "    "
     );
     tick(grid);
-    TEST_ASSERT_FALSE(isAlive(grid, 1, 0));
+    TEST_ASSERT_FALSE(isAlive(grid, (struct Point){1, 0}));
 }
 
 TEST(Rules, live_cell_with_fewer_than_two_neighbors_dies)

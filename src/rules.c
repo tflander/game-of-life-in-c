@@ -16,7 +16,7 @@ void tick(struct Grid grid) {
     for(int c = 0; c < grid.numCols; ++c) {
         for(int r = 0; r < grid.numRows; ++r) {
             int n = count_neighbors(grid, c, r);
-            bool aliveNow = isAlive(grid, c, r);
+            bool aliveNow = isAlive(grid, (struct Point){c, r});
             if(cell_alive(aliveNow, n)) {
                 update[c][r] = 'X';
             } else {
@@ -27,8 +27,8 @@ void tick(struct Grid grid) {
     memcpy(grid.data, &update, sizeof(char) * grid.numRows * grid.numRows);
 }
 
-bool isAlive(struct Grid grid, int col, int row) {
-    char x = *((grid.data + col * grid.numRows) + row);
+bool isAlive(struct Grid grid, struct Point point) {
+    char x = *((grid.data + point.x * grid.numRows) + point.y);
     return x == 'X';
 }
 
@@ -114,7 +114,7 @@ void setGrid(struct Grid grid, ...) {
 void rowAsString(char* buffer, struct Grid grid, int rowIndex) {
     buffer[grid.numCols + 1] = 0;
     for (int c = 0; c < grid.numCols; ++c) {
-        if(isAlive(grid, c, rowIndex)) {
+        if(isAlive(grid, (struct Point){c, rowIndex})) {
             buffer[c] = 'X';
         } else {
             buffer[c] = '.';
