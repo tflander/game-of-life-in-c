@@ -80,12 +80,17 @@ void wipeGrid(struct Grid grid) {
     }
 }
 
+void setCell(struct Grid grid, struct Point point, bool isLive) {
+    char mark = isLive ? 'X' : ' ';
+    *((grid.data + point.x * grid.numRows) + point.y) = mark;
+}
+
 void setLivingCell(struct Grid grid, struct Point point) {
-    *((grid.data + point.x * grid.numRows) + point.y) = 'X';
+    setCell(grid, point, true);
 }
 
 void setDeadCell(struct Grid grid, struct Point point) {
-    *((grid.data + point.x * grid.numRows) + point.y) = ' ';
+    setCell(grid, point, false);
 }
 
 void setRow(struct Grid grid, int row, char* columns) {
