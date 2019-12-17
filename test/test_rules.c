@@ -32,28 +32,28 @@ TEST(Grid, create_empty_grid) {
 }
 
 TEST(Grid, set_grid_cell) {
-    setLivingCell(grid, 1,2);
+    setLivingCell(grid, (struct Point){.x=1, .y=2});
     TEST_ASSERT_EQUAL('X', gridData[1][2]);
 }
 
 TEST(Grid, middle_cell_has_one_living_neighbor) {
-    setLivingCell(grid, 0, 0);
+    setLivingCell(grid, (struct Point){.x=0, .y=0});
     TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=1, .y=1}));
 }
 
 TEST(Grid, top_left_cell_has_one_living_neighbor) {
-    setLivingCell(grid, 0, 1);
+    setLivingCell(grid, (struct Point){.x=0, .y=1});
     TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=0, .y=0}));
 }
 
 TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
-    setLivingCell(grid, 3, 1);
+    setLivingCell(grid, (struct Point){.x=3, .y=1});
     TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=3, .y=2}));
 }
 
 TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
 {
-    setLivingCell(grid, 0, 0);
+    setLivingCell(grid, (struct Point){.x=0, .y=0});
     tick(grid);
     TEST_ASSERT_FALSE(isAlive(grid, (struct Point){0, 0}));
 

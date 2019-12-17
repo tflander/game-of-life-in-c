@@ -15,7 +15,7 @@ struct Point {
 };
 
 bool cell_alive(bool alive_now, int neighbors);
-void setLivingCell(struct Grid grid, int col, int row);
+void setLivingCell(struct Grid grid, struct Point point);
 void setRow(struct Grid grid, int row, char* columns);
 void setGrid(struct Grid grid, ...);
 bool isAlive(struct Grid grid, struct Point point);
