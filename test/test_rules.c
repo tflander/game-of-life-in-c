@@ -38,17 +38,17 @@ TEST(Grid, set_grid_cell) {
 
 TEST(Grid, middle_cell_has_one_living_neighbor) {
     setLivingCell(grid, 0, 0);
-    TEST_ASSERT_EQUAL(1, count_neighbors(grid, 1, 1));
+    TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=1, .y=1}));
 }
 
 TEST(Grid, top_left_cell_has_one_living_neighbor) {
     setLivingCell(grid, 0, 1);
-    TEST_ASSERT_EQUAL(1, count_neighbors(grid, 0, 0));
+    TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=0, .y=0}));
 }
 
 TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
     setLivingCell(grid, 3, 1);
-    TEST_ASSERT_EQUAL(1, count_neighbors(grid, 3, 2));
+    TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=3, .y=2}));
 }
 
 TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)

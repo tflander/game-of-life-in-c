@@ -15,8 +15,9 @@ void tick(struct Grid grid) {
     char update[grid.numCols][grid.numRows];
     for(int c = 0; c < grid.numCols; ++c) {
         for(int r = 0; r < grid.numRows; ++r) {
-            int n = count_neighbors(grid, c, r);
-            bool aliveNow = isAlive(grid, (struct Point){c, r});
+            struct Point point = {.x=c, .y=r};
+            int n = count_neighbors(grid, point);
+            bool aliveNow = isAlive(grid, point);
             if(cell_alive(aliveNow, n)) {
                 update[c][r] = 'X';
             } else {
@@ -40,11 +41,11 @@ bool inGrid(int c, int r, int numCols, int numRows) {
     return c > -1 && r > -1 && c < numCols && r < numRows;
 }
 
-int count_neighbors(struct Grid grid, int col, int row) {
+int count_neighbors(struct Grid grid, struct Point point) {
     int count = 0;
-    for (int c = col - 1; c <= col + 1; ++c) {
-        for (int r = row - 1; r <= row + 1; ++r) {
-            if(notMe(c,r,col,row) && inGrid(c, r, grid.numCols, grid.numRows)) {
+    for (int c = point.x - 1; c <= point.x + 1; ++c) {
+        for (int r = point.y - 1; r <= point.y + 1; ++r) {
+            if(notMe(c,r,point.x,point.y) && inGrid(c, r, grid.numCols, grid.numRows)) {
                 char x = *((grid.data+c*grid.numRows) + r);
                 if(x == 'X') {
                     ++count;
