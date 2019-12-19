@@ -1,7 +1,4 @@
 #include "rules.h"
-// #include <stdio.h>
-// #include <string.h>
-// #include <stdarg.h>
 
 bool cell_alive(bool alive_now, int neighbors)
 {

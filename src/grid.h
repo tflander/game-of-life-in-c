@@ -19,10 +19,8 @@ void setRow(struct Grid grid, int row, char* columns);
 void setGrid(struct Grid grid, ...);
 bool isAlive(struct Grid grid, struct Point point);
 void wipeGrid(struct Grid grid);
-void print(struct Grid grid);
 int count_neighbors(struct Grid grid, struct Point point);
 void tick(struct Grid grid);
-void rowAsString(char* buffer, struct Grid grid, int rowIndex);
 
 
 #endif

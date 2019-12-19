@@ -1,7 +1,6 @@
 #include "grid.h"
 #include "rules.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 
@@ -50,22 +49,6 @@ int count_neighbors(struct Grid grid, struct Point point) {
     return count;
 }
 
-void print(struct Grid grid) {
-    int c, r; 
-    printf("\n");
-    for (r = 0; r < grid.numRows; r++) {
-        for (c = 0; c < grid.numCols; c++) {
-            char x = *((grid.data+c*grid.numRows) + r);
-            if (x == ' ') {
-                x = '.';
-            }
-            printf("%c ", x); 
-        }
-        printf("\n");
-    }
-}
-
-
 void wipeGrid(struct Grid grid) {
     for(int c = 0; c < grid.numCols; ++c) {
         for(int r = 0; r < grid.numRows; ++r) {
@@ -109,15 +92,4 @@ void setGrid(struct Grid grid, ...) {
     }
   
     va_end(ap); 
-}
-
-void rowAsString(char* buffer, struct Grid grid, int rowIndex) {
-    buffer[grid.numCols + 1] = 0;
-    for (int c = 0; c < grid.numCols; ++c) {
-        if(isAlive(grid, (struct Point){c, rowIndex})) {
-            buffer[c] = 'X';
-        } else {
-            buffer[c] = '.';
-        }
-    }
 }

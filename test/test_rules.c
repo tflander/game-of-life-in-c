@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "rules.h"
-#include "grid.h"
+#include "render.h"
 
 const int numCols = 4;
 const int numRows = 3;
