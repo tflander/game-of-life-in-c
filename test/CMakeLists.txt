@@ -8,3 +8,5 @@ include_directories(SYSTEM ${UNITY_DIR})
 add_executable(${PROJECT_TEST} ${TEST_SRC} ${SUT_SRC})
 
 target_link_libraries(${PROJECT_TEST} ${LIB_UNITY})
+
+
