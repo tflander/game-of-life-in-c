@@ -2,12 +2,7 @@
 #define _RULES_H_
 
 #include <stdbool.h>
-
-struct Grid {
-    char* data;
-    int numCols;
-    int numRows;
-};
+#include "grid.h"
 
 struct Point {
     int x;
