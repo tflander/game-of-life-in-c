@@ -1,4 +1,5 @@
 #include "rules.h"
+#include "grid.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
