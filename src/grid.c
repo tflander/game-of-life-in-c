@@ -26,14 +26,6 @@ bool isAlive(struct Grid grid, struct Point point) {
     return x == 'X';
 }
 
-void wipeGrid(struct Grid grid) {
-    for(int c = 0; c < grid.numCols; ++c) {
-        for(int r = 0; r < grid.numRows; ++r) {
-            *((grid.data +c*grid.numRows) + r) = ' ';
-        }
-    }
-}
-
 void setCell(struct Grid grid, struct Point point, bool isLive) {
     char mark = isLive ? 'X' : ' ';
     *((grid.data + point.x * grid.numRows) + point.y) = mark;
@@ -47,15 +39,20 @@ void setDeadCell(struct Grid grid, struct Point point) {
     setCell(grid, point, false);
 }
 
+void wipeGrid(struct Grid grid) {
+    for(int c = 0; c < grid.numCols; ++c) {
+        for(int r = 0; r < grid.numRows; ++r) {
+            struct Point point = {.x=c, .y=r};
+            setDeadCell(grid, point);
+        }
+    }
+}
+
 void setRow(struct Grid grid, int row, char* columns) {
     int numColsToSet = strlen(columns);
     for (int c = 0; c < numColsToSet; ++c) {
         char mark = columns[c];
-        if(mark == 'X') {
-            setLivingCell(grid, (struct Point){.x=c, .y=row});
-        } else {
-            setDeadCell(grid, (struct Point){.x=c, .y=row});
-        }
+        setCell(grid, (struct Point){.x=c, .y=row}, (mark == 'X'));
     }
 }
 
