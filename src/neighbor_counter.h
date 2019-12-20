@@ -1,5 +1,5 @@
-#ifndef _RENDER_H_
-#define _RENDER_H_
+#ifndef _COUNT_NEIGHBORS_H_
+#define _COUNT_NEIGHBORS_H_
 
 #include "grid.h"
 
