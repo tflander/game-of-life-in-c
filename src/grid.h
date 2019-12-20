@@ -15,11 +15,11 @@ struct Grid {
 };
 
 void setLivingCell(struct Grid grid, struct Point point);
-void setRow(struct Grid grid, int row, char* columns);
-void setGrid(struct Grid grid, ...);
 bool isAlive(struct Grid grid, struct Point point);
 void wipeGrid(struct Grid grid);
-void tick(struct Grid grid);
+char getCell(struct Grid grid, struct Point point);
 
+void setRow(struct Grid grid, int row, char* columns);
+void setGrid(struct Grid grid, ...);
 
 #endif

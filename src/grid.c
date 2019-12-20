@@ -3,13 +3,16 @@
 #include <stdarg.h>
 
 bool isAlive(struct Grid grid, struct Point point) {
-    char x = *((grid.data + point.x * grid.numRows) + point.y);
-    return x == 'X';
+    return getCell(grid, point) == 'X';
 }
 
 void setCell(struct Grid grid, struct Point point, bool isLive) {
     char mark = isLive ? 'X' : ' ';
     *((grid.data + point.x * grid.numRows) + point.y) = mark;
+}
+
+char getCell(struct Grid grid, struct Point point) {
+    return *((grid.data + point.x * grid.numRows) + point.y);
 }
 
 void setLivingCell(struct Grid grid, struct Point point) {

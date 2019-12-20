@@ -13,7 +13,7 @@ int count_neighbors(struct Grid grid, struct Point point) {
     for (int c = point.x - 1; c <= point.x + 1; ++c) {
         for (int r = point.y - 1; r <= point.y + 1; ++r) {
             if(notMe(c,r,point.x,point.y) && inGrid(c, r, grid.numCols, grid.numRows)) {
-                char x = *((grid.data+c*grid.numRows) + r);
+                char x = getCell(grid, (struct Point){.x=c, .y=r});
                 if(x == 'X') {
                     ++count;
                 }
