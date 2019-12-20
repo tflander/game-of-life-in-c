@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
+#include <gameOfLife.h>
 #include "rules.h"
 #include "render.h"
 #include "neighbor_counter.h"
@@ -23,9 +24,9 @@ TEST_TEAR_DOWN(Grid) {}
 
 TEST(Grid, create_empty_grid) {
 
-    for(int c = 0; c < numCols; ++c) {
-       for(int r = 0; r < numRows; ++r) {
-           TEST_ASSERT_EQUAL(' ', gridData[c][r]);
+    for(int c = 0; c < grid.numCols; ++c) {
+       for(int r = 0; r < grid.numRows; ++r) {
+           TEST_ASSERT_EQUAL(' ', getCell(grid, (struct Point){.x=c, .y=r}));
        }
     }
 }
