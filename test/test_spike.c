@@ -12,13 +12,16 @@ TEST_SETUP(Spike) {
 }
 TEST_TEAR_DOWN(Spike) {}
 
-struct SpikeGrid createGrid(int numRows, int numColumns) {
+struct SpikeGrid createEmptyGrid(int numRows, int numColumns) {
 
-    char **grid = (char**) calloc(numRows, sizeof(char*));
+    char **grid = (char**) malloc(numRows * sizeof(char*));
 
-    for ( int i = 0; i < numRows; i++ )
-    {
-        grid[i] = (char*) calloc(numColumns, sizeof(char));
+    for ( int i = 0; i < numRows; i++ ) {
+        grid[i] = (char*) malloc(numColumns * sizeof(char));
+
+        for (int j = 0; j < numColumns; ++j) {
+            grid[i][j] = ' ';
+        }
     }
 
     struct SpikeGrid spikeGrid = {grid, numRows, numColumns};
@@ -27,29 +30,29 @@ struct SpikeGrid createGrid(int numRows, int numColumns) {
 
 }
 
+void destroyGrid(struct SpikeGrid grid) {
+   for ( int i = 0; i < grid.numRows; i++ )
+    {
+        free(grid.data[i]);
+    }
+
+    free(grid.data);    
+}
+
+
 TEST(Spike, foo) {
 
-    // arrange
-    int num_rows = 4;
-    int num_columns = 3;
-
-    struct SpikeGrid grid = createGrid(num_rows, num_columns);
+    struct SpikeGrid grid = createEmptyGrid(4, 3);
 
     // act
     grid.data[1][2] = 'X';
 
     // assert
-    TEST_ASSERT_EQUAL(0, grid.data[1][1]);
+    TEST_ASSERT_EQUAL(' ', grid.data[1][1]);
     TEST_ASSERT_EQUAL('X', grid.data[1][2]);
 
     // cleanup
-    for ( int i = 0; i < num_rows; i++ )
-    {
-        free(grid.data[i]);
-    }
-
-    free(grid.data);
-
+    destroyGrid(grid);
 }
 
 TEST_GROUP_RUNNER(Spike)
