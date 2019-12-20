@@ -5,7 +5,7 @@
 #include <string.h>
 #include "rules.h"
 #include "render.h"
-#include "neighbors.h"
+#include "neighbor_counter.h"
 
 const int numCols = 4;
 const int numRows = 3;

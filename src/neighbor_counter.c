@@ -1,4 +1,4 @@
-#include "neighbors.h"
+#include "neighbor_counter.h"
 
 bool notMe(int c, int r, int col, int row) {
     return r != row || c != col;
