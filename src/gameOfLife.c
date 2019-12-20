@@ -10,11 +10,7 @@ void tick(struct Grid grid) {
             struct Point point = {.x=c, .y=r};
             int neighborCount = count_neighbors(grid, point);
             bool aliveNow = isAlive(grid, point);
-            if(cell_alive(aliveNow, neighborCount)) {
-                updatedGrid[c][r] = 'X';
-            } else {
-                updatedGrid[c][r] = ' ';
-            }
+            updatedGrid[c][r] = cell_alive(aliveNow, neighborCount) ? 'X' : ' ';
         }
     }
     memcpy(grid.data, &updatedGrid, sizeof(char) * grid.numRows * grid.numRows);
