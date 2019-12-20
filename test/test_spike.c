@@ -6,11 +6,7 @@ struct SpikeGrid {
     int numColumns;
 };
 
-TEST_GROUP(Spike);
-
-TEST_SETUP(Spike) {
-}
-TEST_TEAR_DOWN(Spike) {}
+struct SpikeGrid grid;
 
 struct SpikeGrid createEmptyGrid(int numRows, int numColumns) {
 
@@ -39,20 +35,24 @@ void destroyGrid(struct SpikeGrid grid) {
     free(grid.data);    
 }
 
+TEST_GROUP(Spike);
+
+TEST_SETUP(Spike) {
+    grid = createEmptyGrid(4, 3);
+}
+
+TEST_TEAR_DOWN(Spike) {
+    destroyGrid(grid);
+}
+
 
 TEST(Spike, foo) {
 
-    struct SpikeGrid grid = createEmptyGrid(4, 3);
-
-    // act
     grid.data[1][2] = 'X';
 
-    // assert
     TEST_ASSERT_EQUAL(' ', grid.data[1][1]);
     TEST_ASSERT_EQUAL('X', grid.data[1][2]);
 
-    // cleanup
-    destroyGrid(grid);
 }
 
 TEST_GROUP_RUNNER(Spike)
