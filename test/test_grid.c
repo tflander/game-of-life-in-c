@@ -9,8 +9,6 @@
 #include "neighbor_counter.h"
 #include "support.h"
 
-const int numCols = 4;
-const int numRows = 3;
 struct Grid grid;
 
 void verifyGrid(struct Grid grid, ...);
@@ -18,6 +16,8 @@ void verifyGrid(struct Grid grid, ...);
 TEST_GROUP(Grid);
 
 TEST_SETUP(Grid) {
+    const int numCols = 4;
+    const int numRows = 3;
     grid = createEmptyGrid(numRows, numCols);
 }
 TEST_TEAR_DOWN(Grid) {
