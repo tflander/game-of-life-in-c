@@ -7,6 +7,7 @@
 #include "rules.h"
 #include "render.h"
 #include "neighbor_counter.h"
+#include "support.h"
 
 const int numCols = 4;
 const int numRows = 3;
@@ -127,26 +128,4 @@ TEST_GROUP_RUNNER(Grid)
     RUN_TEST_CASE(Grid, dead_cell_with_three_neighbors_becomes_live);
     RUN_TEST_CASE(Grid, dead_cell_with_two_neighbors_stays_dead);
 
-}
-
-void verifyRow(struct Grid grid, int rowIndex, char* expected) {
-    char actual[grid.numCols + 1];
-    rowAsString(actual, grid, rowIndex);
-    if(0 != strcmp(expected, actual)) {
-        char msg[255];
-        sprintf(msg, "Error in row %d.  Expected %s, found %s", rowIndex, expected, actual);
-        TEST_FAIL_MESSAGE(msg);
-    }
-}
-
-void verifyGrid(struct Grid grid, ...) {
-    va_list ap; 
-    va_start(ap, grid); 
-  
-    for (int r = 0; r < grid.numRows; ++r) {
-        char* row = va_arg(ap, char*); 
-        verifyRow(grid, r, row);
-    }
-  
-    va_end(ap); 
 }

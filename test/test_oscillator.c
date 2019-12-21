@@ -8,6 +8,7 @@
 #include "rules.h"
 #include "render.h"
 #include "neighbor_counter.h"
+#include "support.h"
 
 struct Grid gridForPinwheel;
 
