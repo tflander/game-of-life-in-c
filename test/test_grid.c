@@ -10,22 +10,23 @@
 
 const int numCols = 4;
 const int numRows = 3;
-char gridData[numCols][numRows];
+struct Grid grid;
 
-struct Grid grid = {(char*)gridData, numCols, numRows};
 void verifyGrid(struct Grid grid, ...);
 
 TEST_GROUP(Grid);
 
 TEST_SETUP(Grid) {
-    wipeGrid(grid);
+    grid = createEmptyGrid(numRows, numCols);
 }
-TEST_TEAR_DOWN(Grid) {}
+TEST_TEAR_DOWN(Grid) {
+    destroyGrid(grid);
+}
 
 TEST(Grid, create_empty_grid) {
 
-    for(int c = 0; c < grid.numCols; ++c) {
-       for(int r = 0; r < grid.numRows; ++r) {
+    for(int r = 0; r < grid.numRows; ++r) {
+        for(int c = 0; c < grid.numCols; ++c) {
            TEST_ASSERT_EQUAL(' ', getCell(grid, (struct Point){.x=c, .y=r}));
        }
     }
@@ -33,7 +34,7 @@ TEST(Grid, create_empty_grid) {
 
 TEST(Grid, set_grid_cell) {
     setLivingCell(grid, (struct Point){.x=1, .y=2});
-    TEST_ASSERT_EQUAL('X', gridData[1][2]);
+    TEST_ASSERT_EQUAL('X', getCell(grid, (struct Point){.x=1, .y=2}));
 }
 
 TEST(Grid, middle_cell_has_one_living_neighbor) {
@@ -54,7 +55,7 @@ TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
 TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
 {
     setLivingCell(grid, (struct Point){.x=0, .y=0});
-    tick(grid);
+    tick(&grid);
     TEST_ASSERT_FALSE(isAlive(grid, (struct Point){0, 0}));
 
 }
@@ -66,7 +67,7 @@ TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
         "X   ",
         "    "
     );
-    tick(grid);
+    tick(&grid);
     TEST_ASSERT_TRUE(isAlive(grid, (struct Point){0, 0}));
 }
 
@@ -78,7 +79,7 @@ TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
         "...."
     );
 
-    tick(grid);
+    tick(&grid);
     
     verifyGrid(grid,
         "X.X.",
@@ -95,7 +96,7 @@ TEST(Grid, dead_cell_with_three_neighbors_becomes_live)
         "XX  ",
         "    "
     );
-    tick(grid);
+    tick(&grid);
     TEST_ASSERT_TRUE(isAlive(grid, (struct Point){1, 0}));
 
 }
@@ -107,7 +108,7 @@ TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
         "    ",
         "    "
     );
-    tick(grid);
+    tick(&grid);
     TEST_ASSERT_FALSE(isAlive(grid, (struct Point){1, 0}));
 }
 

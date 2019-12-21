@@ -3,6 +3,10 @@
 
 #include "grid.h"
 
-void tick(struct Grid grid);
+struct Grid createEmptyGrid(int numRows, int numColumns);
+
+void tick(struct Grid* grid);
+
+void destroyGrid(struct Grid grid);
 
 #endif

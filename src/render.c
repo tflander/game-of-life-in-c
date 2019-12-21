@@ -3,10 +3,10 @@
 
 void print(struct Grid grid) {
     int c, r; 
-    printf("\n");
+    printf("\n\n");
     for (r = 0; r < grid.numRows; r++) {
         for (c = 0; c < grid.numCols; c++) {
-            char x = *((grid.data+c*grid.numRows) + r);
+            char x = getCell(grid, (struct Point){.x=c, .y=r});
             if (x == ' ') {
                 x = '.';
             }
@@ -14,6 +14,7 @@ void print(struct Grid grid) {
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 void rowAsString(char* buffer, struct Grid grid, int rowIndex) {

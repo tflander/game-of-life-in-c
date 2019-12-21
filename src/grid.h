@@ -9,11 +9,12 @@ struct Point {
 };
 
 struct Grid {
-    char* data;
-    int numCols;
+    char** data;
     int numRows;
+    int numCols;
 };
 
+void setCell(struct Grid grid, struct Point point, bool isLive);
 void setLivingCell(struct Grid grid, struct Point point);
 bool isAlive(struct Grid grid, struct Point point);
 void wipeGrid(struct Grid grid);

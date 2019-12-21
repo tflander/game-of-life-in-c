@@ -8,7 +8,7 @@ struct SpikeGrid {
 
 struct SpikeGrid grid;
 
-struct SpikeGrid createEmptyGrid(int numRows, int numColumns) {
+struct SpikeGrid createEmptySpikeGrid(int numRows, int numColumns) {
 
     char **grid = (char**) malloc(numRows * sizeof(char*));
 
@@ -26,7 +26,7 @@ struct SpikeGrid createEmptyGrid(int numRows, int numColumns) {
 
 }
 
-void destroyGrid(struct SpikeGrid grid) {
+void destroySpikeGrid(struct SpikeGrid grid) {
    for ( int i = 0; i < grid.numRows; i++ )
     {
         free(grid.data[i]);
@@ -38,11 +38,11 @@ void destroyGrid(struct SpikeGrid grid) {
 TEST_GROUP(Spike);
 
 TEST_SETUP(Spike) {
-    grid = createEmptyGrid(4, 3);
+    grid = createEmptySpikeGrid(4, 3);
 }
 
 TEST_TEAR_DOWN(Spike) {
-    destroyGrid(grid);
+    destroySpikeGrid(grid);
 }
 
 
