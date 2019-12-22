@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#include <gameOfLife.h>
+#include "gameOfLife.h"
 #include "rules.h"
 #include "render.h"
 #include "neighbor_counter.h"
@@ -22,6 +22,21 @@ TEST_SETUP(Grid) {
 }
 TEST_TEAR_DOWN(Grid) {
     destroyGrid(grid);
+}
+
+TEST(Grid, create_random_grid) {
+    struct Grid randomGrid;
+    randomGrid = createRandomGrid(2, 3);
+    int numMarks = 0;
+    for(int r = 0; r < randomGrid.numRows; ++r) {
+        for(int c = 0; c < randomGrid.numCols; ++c) {
+            if ('X' == getCell(randomGrid, (struct Point){.x=c, .y=r})) {
+                ++numMarks;
+            }
+       }
+    }
+    int numCells = randomGrid.numCols * randomGrid.numRows;
+    TEST_ASSERT_TRUE(numMarks > 0 && numMarks < numCells);
 }
 
 TEST(Grid, create_empty_grid) {
@@ -117,6 +132,7 @@ TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
 TEST_GROUP_RUNNER(Grid)
 {
     RUN_TEST_CASE(Grid, create_empty_grid);
+    RUN_TEST_CASE(Grid, create_random_grid);
     RUN_TEST_CASE(Grid, set_grid_cell);
     RUN_TEST_CASE(Grid, middle_cell_has_one_living_neighbor);    
     RUN_TEST_CASE(Grid, top_left_cell_has_one_living_neighbor);

@@ -22,6 +22,21 @@ struct Grid createEmptyGrid(int numRows, int numColumns) {
 
 }
 
+struct Grid createRandomGrid(int numRows, int numColumns) {
+    srand(time(0));
+    struct Grid grid = createEmptyGrid(numRows, numColumns);
+    int randomNumberBoundry = RAND_MAX / 2;
+    for ( int r = 0; r < numRows; r++ ) {
+        for (int c = 0; c < numColumns; ++c) {
+            struct Point point = {.x=c, .y=r};
+            bool isLive = rand() > randomNumberBoundry;
+            printf("\nisLive = %d", isLive);
+            setCell(grid, point, isLive);
+        }
+    }
+    return grid;
+}
+
 void destroyGrid(struct Grid grid) {
    for ( int i = 0; i < grid.numRows; i++ )
     {
