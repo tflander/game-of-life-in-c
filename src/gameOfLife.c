@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h> 
 #include <stdio.h> 
+#include <time.h>
 
 struct Grid createEmptyGrid(int numRows, int numColumns) {
 
@@ -30,7 +31,6 @@ struct Grid createRandomGrid(int numRows, int numColumns) {
         for (int c = 0; c < numColumns; ++c) {
             struct Point point = {.x=c, .y=r};
             bool isLive = rand() > randomNumberBoundry;
-            printf("\nisLive = %d", isLive);
             setCell(grid, point, isLive);
         }
     }

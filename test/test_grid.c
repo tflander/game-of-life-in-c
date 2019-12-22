@@ -37,6 +37,7 @@ TEST(Grid, create_random_grid) {
     }
     int numCells = randomGrid.numCols * randomGrid.numRows;
     TEST_ASSERT_TRUE(numMarks > 0 && numMarks < numCells);
+    destroyGrid(randomGrid);
 }
 
 TEST(Grid, create_empty_grid) {
