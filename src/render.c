@@ -3,19 +3,37 @@
 
 void display(struct Grid grid) {
     int c, r; 
-    printf("\n\n");
+    preDisplay();
     for (r = 0; r < grid.numRows; r++) {
         for (c = 0; c < grid.numCols; c++) {
-            char x = getCell(grid, (struct Point){.x=c, .y=r});
-            if (x == ' ') {
-                x = '.';
-            }
-            printf("%c ", x); 
+            struct Point point = {.x=c, .y=r};
+            char x = getCell(grid, point);
+            displayCell(point, x);
         }
-        printf("\n");
+        endRow();
     }
+    postDisplay();
+}
+
+void preDisplay() {
+    printf("\n\n");
+}
+
+void postDisplay() {
     printf("\n");
 }
+
+void displayCell(struct Point point, char mark) {
+    if (mark == ' ') {
+        mark = '.';
+    }
+    printf("%c ", mark); 
+}
+
+void endRow() {
+    printf("\n");
+}
+
 
 void rowAsString(char* buffer, struct Grid grid, int rowIndex) {
     buffer[grid.numCols + 1] = 0;
