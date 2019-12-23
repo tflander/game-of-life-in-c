@@ -1,18 +1,23 @@
 #include "render.h"
 #include <stdio.h>
 
+void (*preDisplayFunction)(void) = &preDisplay; 
+void (*endRowFunction)(void) = &endRow; 
+void (*postDisplayFunction)(void) = &postDisplay; 
+void (*displayCellFunction)(struct Point point, char mark) = &displayCell;
+
 void display(struct Grid grid) {
     int c, r; 
-    preDisplay();
+    (*preDisplayFunction)();
     for (r = 0; r < grid.numRows; r++) {
         for (c = 0; c < grid.numCols; c++) {
             struct Point point = {.x=c, .y=r};
             char x = getCell(grid, point);
-            displayCell(point, x);
+            (*displayCellFunction)(point, x);
         }
-        endRow();
+        (*endRowFunction)();
     }
-    postDisplay();
+    (*postDisplayFunction)();
 }
 
 void preDisplay() {
