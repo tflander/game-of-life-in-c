@@ -1,7 +1,7 @@
 #include "render.h"
 #include <stdio.h>
 
-void print(struct Grid grid) {
+void display(struct Grid grid) {
     int c, r; 
     printf("\n\n");
     for (r = 0; r < grid.numRows; r++) {

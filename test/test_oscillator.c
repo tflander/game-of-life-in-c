@@ -40,7 +40,7 @@ TEST(Oscillator, pinwheel)
     );
 
     tick(&gridForPinwheel);
-    print(gridForPinwheel);
+    display(gridForPinwheel);
     
     verifyGrid(gridForPinwheel,
         "......XX....",
@@ -60,7 +60,7 @@ TEST(Oscillator, pinwheel)
     for (int i = 0; i < 10; ++i) {
         sleep(1);
         tick(&gridForPinwheel);
-        print(gridForPinwheel);
+        display(gridForPinwheel);
     }
 }
 

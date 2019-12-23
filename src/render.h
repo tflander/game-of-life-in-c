@@ -3,7 +3,7 @@
 
 #include "grid.h"
 
-void print(struct Grid grid);
+void display(struct Grid grid);
 void rowAsString(char* buffer, struct Grid grid, int rowIndex);
 
 
