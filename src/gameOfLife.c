@@ -23,8 +23,8 @@ struct Grid createEmptyGrid(int numRows, int numColumns) {
 
 }
 
-struct Grid createRandomGrid(int numRows, int numColumns) {
-    srand(time(0));
+struct Grid createRandomGrid(int numRows, int numColumns, int seed) {
+    srand(seed);
     struct Grid grid = createEmptyGrid(numRows, numColumns);
     int randomNumberBoundry = RAND_MAX / 2;
     for ( int r = 0; r < numRows; r++ ) {

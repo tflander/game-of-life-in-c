@@ -4,7 +4,7 @@
 #include "grid.h"
 
 struct Grid createEmptyGrid(int numRows, int numColumns);
-struct Grid createRandomGrid(int numRows, int numColumns);
+struct Grid createRandomGrid(int numRows, int numColumns, int seed);
 
 void tick(struct Grid* grid);
 

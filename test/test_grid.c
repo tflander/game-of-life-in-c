@@ -26,7 +26,7 @@ TEST_TEAR_DOWN(Grid) {
 
 TEST(Grid, create_random_grid) {
     struct Grid randomGrid;
-    randomGrid = createRandomGrid(2, 3);
+    randomGrid = createRandomGrid(2, 3, time(0));
     int numMarks = 0;
     for(int r = 0; r < randomGrid.numRows; ++r) {
         for(int c = 0; c < randomGrid.numCols; ++c) {
@@ -36,6 +36,7 @@ TEST(Grid, create_random_grid) {
        }
     }
     int numCells = randomGrid.numCols * randomGrid.numRows;
+    // print(randomGrid);
     TEST_ASSERT_TRUE(numMarks > 0 && numMarks < numCells);
     destroyGrid(randomGrid);
 }
