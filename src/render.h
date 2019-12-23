@@ -6,11 +6,17 @@
 void display(struct Grid grid);
 void rowAsString(char* buffer, struct Grid grid, int rowIndex);
 
-// TODO: struct of function pointers?
-void preDisplay();
-void postDisplay();
-void displayCell(struct Point point, char mark);
-void endRow();
+struct displayFunctionPointers {
+    void (*preDisplayFunction)(void); 
+    void (*endRowFunction)(void); 
+    void (*postDisplayFunction)(void); 
+    void (*displayCellFunction)(struct Point point, char mark);
+};
 
+// TODO: struct of function pointers?
+void defaultPreDisplay();
+void defaultPostDisplay();
+void defaultDisplayCell(struct Point point, char mark);
+void defaultEndRow();
 
 #endif
