@@ -22,29 +22,17 @@ void randomizeGrid(struct Grid grid, int seed) {
 
 void tick(struct Grid grid) {
 
-    // struct Grid updatedGrid = createEmptyGrid(grid->numRows, grid->numCols);
-    // for(int c = 0; c < grid->numCols; ++c) {
-    //     for(int r = 0; r < grid->numRows; ++r) {
+    // char gridBufferForUpdate[grid.numCols][grid.numRows];
+    // struct Grid updatedGrid = {gridBufferForUpdate, grid.numCols, grid.numRows};
+    // for(int c = 0; c < grid.numCols; ++c) {
+    //     for(int r = 0; r < grid.numRows; ++r) {
     //         struct Point point = {.x=c, .y=r};
-    //         int neighborCount = count_neighbors(*grid, point);
-    //         bool aliveNow = isAlive(*grid, point);
+    //         int neighborCount = count_neighbors(grid, point);
+    //         bool aliveNow = isAlive(grid, point);
     //         setCell(updatedGrid, point, cell_alive(aliveNow, neighborCount));
     //     }
     // }
-    // destroyGrid(*grid);
-    // grid->data = updatedGrid.data;
-
-    char gridBufferForUpdate[grid.numCols][grid.numRows];
-    struct Grid updatedGrid = {gridBufferForUpdate, grid.numCols, grid.numRows};
-    for(int c = 0; c < grid.numCols; ++c) {
-        for(int r = 0; r < grid.numRows; ++r) {
-            struct Point point = {.x=c, .y=r};
-            int neighborCount = count_neighbors(grid, point);
-            bool aliveNow = isAlive(grid, point);
-            setCell(updatedGrid, point, cell_alive(aliveNow, neighborCount));
-        }
-    }
-    memcpy(grid.data, &updatedGrid, sizeof(char) * grid.numRows * grid.numRows);
+    // memcpy(grid.data, &updatedGrid, sizeof(char) * grid.numRows * grid.numRows);
 
 }
 

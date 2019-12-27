@@ -9,7 +9,7 @@ struct Point {
 };
 
 struct Grid {
-    char** data;
+    char* data;
     int numRows;
     int numCols;
 };

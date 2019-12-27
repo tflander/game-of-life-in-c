@@ -1,56 +1,56 @@
-// #include <stdbool.h>
-// #include <unity_fixture.h>
-// #include <stdarg.h>
-// #include <stdio.h>
-// #include <string.h>
-// #include <time.h>
-// #include "gameOfLife.h"
-// #include "rules.h"
-// #include "render.h"
-// #include "neighbor_counter.h"
-// #include "support.h"
-
-// struct Grid grid;
+#include <stdbool.h>
+#include <unity_fixture.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include "gameOfLife.h"
+#include "rules.h"
+#include "render.h"
+#include "neighbor_counter.h"
+#include "support.h"
 
 // void verifyGrid(struct Grid grid, ...);
 
-// TEST_GROUP(Grid);
+const int numColsForGridTests = 4;
+const int numRowsForGridTests = 3;
+char gridData[numRowsForGridTests][numColsForGridTests];
+struct Grid grid = (struct Grid){(char*)gridData, numColsForGridTests, numRowsForGridTests};
 
-// TEST_SETUP(Grid) {
-//     const int numCols = 4;
-//     const int numRows = 3;
-//     grid = createEmptyGrid(numRows, numCols);
-// }
+TEST_GROUP(Grid);
 
-// TEST_TEAR_DOWN(Grid) {
-//     destroyGrid(grid);
-// }
+TEST_SETUP(Grid) {
+    wipeGrid(grid);
+}
 
-// TEST(Grid, create_random_grid) {
-//     struct Grid randomGrid;
-//     randomGrid = createRandomGrid(2, 3, time(0));
-//     int numMarks = 0;
-//     for(int r = 0; r < randomGrid.numRows; ++r) {
-//         for(int c = 0; c < randomGrid.numCols; ++c) {
-//             if ('X' == getCell(randomGrid, (struct Point){.x=c, .y=r})) {
-//                 ++numMarks;
-//             }
-//        }
-//     }
-//     int numCells = randomGrid.numCols * randomGrid.numRows;
-//     // print(randomGrid);
-//     TEST_ASSERT_TRUE(numMarks > 0 && numMarks < numCells);
-//     destroyGrid(randomGrid);
-// }
+TEST_TEAR_DOWN(Grid) {
+}
 
-// TEST(Grid, create_empty_grid) {
+TEST(Grid, create_empty_grid) {
 
-//     for(int r = 0; r < grid.numRows; ++r) {
-//         for(int c = 0; c < grid.numCols; ++c) {
-//            TEST_ASSERT_EQUAL(' ', getCell(grid, (struct Point){.x=c, .y=r}));
-//        }
-//     }
-// }
+    for(int r = 0; r < grid.numRows; ++r) {
+        for(int c = 0; c < grid.numCols; ++c) {
+           TEST_ASSERT_EQUAL(' ', getCell(grid, (struct Point){.x=c, .y=r}));
+       }
+    }
+}
+
+TEST(Grid, randomize_grid) {
+    // struct Grid randomGrid;
+    // randomGrid = createRandomGrid(2, 3, time(0));
+    // int numMarks = 0;
+    // for(int r = 0; r < randomGrid.numRows; ++r) {
+    //     for(int c = 0; c < randomGrid.numCols; ++c) {
+    //         if ('X' == getCell(randomGrid, (struct Point){.x=c, .y=r})) {
+    //             ++numMarks;
+    //         }
+    //    }
+    // }
+    // int numCells = randomGrid.numCols * randomGrid.numRows;
+    // // print(randomGrid);
+    // TEST_ASSERT_TRUE(numMarks > 0 && numMarks < numCells);
+    // destroyGrid(randomGrid);
+}
 
 // TEST(Grid, set_grid_cell) {
 //     setLivingCell(grid, (struct Point){.x=1, .y=2});
@@ -133,19 +133,19 @@
 // }
 
 
-// TEST_GROUP_RUNNER(Grid)
-// {
-//     RUN_TEST_CASE(Grid, create_empty_grid);
-//     RUN_TEST_CASE(Grid, create_random_grid);
-//     RUN_TEST_CASE(Grid, set_grid_cell);
-//     RUN_TEST_CASE(Grid, middle_cell_has_one_living_neighbor);    
-//     RUN_TEST_CASE(Grid, top_left_cell_has_one_living_neighbor);
-//     RUN_TEST_CASE(Grid, bottom_right_cell_has_one_living_neighbor);
+TEST_GROUP_RUNNER(Grid)
+{
+    RUN_TEST_CASE(Grid, create_empty_grid);
+    RUN_TEST_CASE(Grid, randomize_grid);
+    // RUN_TEST_CASE(Grid, set_grid_cell);
+    // RUN_TEST_CASE(Grid, middle_cell_has_one_living_neighbor);    
+    // RUN_TEST_CASE(Grid, top_left_cell_has_one_living_neighbor);
+    // RUN_TEST_CASE(Grid, bottom_right_cell_has_one_living_neighbor);
 
-//     RUN_TEST_CASE(Grid, live_cell_with_fewer_than_two_neighbors_dies);
-//     RUN_TEST_CASE(Grid, live_cell_with_two_or_three_neighbors_survives);
-//     RUN_TEST_CASE(Grid, live_cell_with_more_than_three_neighbors_dies);
-//     RUN_TEST_CASE(Grid, dead_cell_with_three_neighbors_becomes_live);
-//     RUN_TEST_CASE(Grid, dead_cell_with_two_neighbors_stays_dead);
+    // RUN_TEST_CASE(Grid, live_cell_with_fewer_than_two_neighbors_dies);
+    // RUN_TEST_CASE(Grid, live_cell_with_two_or_three_neighbors_survives);
+    // RUN_TEST_CASE(Grid, live_cell_with_more_than_three_neighbors_dies);
+    // RUN_TEST_CASE(Grid, dead_cell_with_three_neighbors_becomes_live);
+    // RUN_TEST_CASE(Grid, dead_cell_with_two_neighbors_stays_dead);
 
-// }
+}
