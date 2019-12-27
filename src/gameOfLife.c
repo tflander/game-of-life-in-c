@@ -7,19 +7,6 @@
 #include <stdio.h> 
 #include <time.h>
 
-int randomNumberBoundry = RAND_MAX / 2;
-
-void randomizeGrid(struct Grid grid, int seed) {
-    srand(seed);
-    for ( int r = 0; r < grid.numRows; r++ ) {
-        for (int c = 0; c < grid.numCols; ++c) {
-            struct Point point = {.x=c, .y=r};
-            bool isLive = rand() > randomNumberBoundry;
-            setCell(grid, point, isLive);
-        }
-    }    
-}
-
 void tick(struct Grid grid) {
 
     // char gridBufferForUpdate[grid.numCols][grid.numRows];

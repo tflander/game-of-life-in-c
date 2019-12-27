@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <render.h>
 #include "gameOfLife.h"
 #include "rules.h"
 #include "render.h"
@@ -15,7 +16,7 @@
 const int numColsForGridTests = 4;
 const int numRowsForGridTests = 3;
 char gridData[numRowsForGridTests][numColsForGridTests];
-struct Grid grid = (struct Grid){(char*)gridData, numColsForGridTests, numRowsForGridTests};
+struct Grid grid = (struct Grid){(char*)gridData, numRowsForGridTests, numColsForGridTests};
 
 TEST_GROUP(Grid);
 
@@ -36,41 +37,41 @@ TEST(Grid, create_empty_grid) {
 }
 
 TEST(Grid, randomize_grid) {
-    // struct Grid randomGrid;
-    // randomGrid = createRandomGrid(2, 3, time(0));
-    // int numMarks = 0;
-    // for(int r = 0; r < randomGrid.numRows; ++r) {
-    //     for(int c = 0; c < randomGrid.numCols; ++c) {
-    //         if ('X' == getCell(randomGrid, (struct Point){.x=c, .y=r})) {
-    //             ++numMarks;
-    //         }
-    //    }
-    // }
-    // int numCells = randomGrid.numCols * randomGrid.numRows;
-    // // print(randomGrid);
-    // TEST_ASSERT_TRUE(numMarks > 0 && numMarks < numCells);
-    // destroyGrid(randomGrid);
+    randomizeGrid(grid, time(0));
+    int numMarks = 0;
+    for(int r = 0; r < grid.numRows; ++r) {
+        for(int c = 0; c < grid.numCols; ++c) {
+            if ('X' == getCell(grid, (struct Point){.x=c, .y=r})) {
+                ++numMarks;
+            }
+       }
+    }
+    int numCells = grid.numCols * grid.numRows;
+    TEST_ASSERT_TRUE(numMarks > 0 && numMarks < numCells);
 }
 
-// TEST(Grid, set_grid_cell) {
-//     setLivingCell(grid, (struct Point){.x=1, .y=2});
-//     TEST_ASSERT_EQUAL('X', getCell(grid, (struct Point){.x=1, .y=2}));
-// }
+TEST(Grid, set_grid_cell) {
+    setLivingCell(grid, (struct Point){.x=1, .y=2});
+    TEST_ASSERT_EQUAL('X', getCell(grid, (struct Point){.x=1, .y=2}));
+}
 
-// TEST(Grid, middle_cell_has_one_living_neighbor) {
-//     setLivingCell(grid, (struct Point){.x=0, .y=0});
-//     TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=1, .y=1}));
-// }
+TEST(Grid, middle_cell_has_one_living_neighbor) {
+    setLivingCell(grid, (struct Point){.x=0, .y=0});
+    TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=1, .y=1}));
+}
 
-// TEST(Grid, top_left_cell_has_one_living_neighbor) {
-//     setLivingCell(grid, (struct Point){.x=0, .y=1});
-//     TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=0, .y=0}));
-// }
+TEST(Grid, top_left_cell_has_one_living_neighbor) {
+    setLivingCell(grid, (struct Point){.x=0, .y=1});
+    TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=0, .y=0}));
+}
 
-// TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
-//     setLivingCell(grid, (struct Point){.x=3, .y=1});
-//     TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=3, .y=2}));
-// }
+TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
+    display(grid);
+    setLivingCell(grid, (struct Point){.x=3, .y=1});
+    display(grid);
+
+    TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=3, .y=2}));
+}
 
 // TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
 // {
@@ -137,10 +138,10 @@ TEST_GROUP_RUNNER(Grid)
 {
     RUN_TEST_CASE(Grid, create_empty_grid);
     RUN_TEST_CASE(Grid, randomize_grid);
-    // RUN_TEST_CASE(Grid, set_grid_cell);
-    // RUN_TEST_CASE(Grid, middle_cell_has_one_living_neighbor);    
-    // RUN_TEST_CASE(Grid, top_left_cell_has_one_living_neighbor);
-    // RUN_TEST_CASE(Grid, bottom_right_cell_has_one_living_neighbor);
+    RUN_TEST_CASE(Grid, set_grid_cell);
+    RUN_TEST_CASE(Grid, middle_cell_has_one_living_neighbor);    
+    RUN_TEST_CASE(Grid, top_left_cell_has_one_living_neighbor);
+    RUN_TEST_CASE(Grid, bottom_right_cell_has_one_living_neighbor);
 
     // RUN_TEST_CASE(Grid, live_cell_with_fewer_than_two_neighbors_dies);
     // RUN_TEST_CASE(Grid, live_cell_with_two_or_three_neighbors_survives);

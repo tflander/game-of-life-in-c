@@ -2,6 +2,9 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h> 
+#include <time.h>
 
 bool isAlive(struct Grid grid, struct Point point) {
     return getCell(grid, point) == 'X';
@@ -31,6 +34,19 @@ void wipeGrid(struct Grid grid) {
             setDeadCell(grid, point);
         }
     }
+}
+
+int randomNumberBoundry = RAND_MAX / 2;
+
+void randomizeGrid(struct Grid grid, int seed) {
+    srand(seed);
+    for ( int r = 0; r < grid.numRows; r++ ) {
+        for (int c = 0; c < grid.numCols; ++c) {
+            struct Point point = {.x=c, .y=r};
+            bool isLive = rand() > randomNumberBoundry;
+            setCell(grid, point, isLive);
+        }
+    }    
 }
 
 void setRow(struct Grid grid, int row, char* columns) {
