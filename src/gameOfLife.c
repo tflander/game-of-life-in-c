@@ -18,6 +18,7 @@ struct Grid createEmptyGrid(int numRows, int numColumns) {
         }
     }
 
+    // Whoops!  returning stack variable.
     struct Grid gridResult = {grid, numRows, numColumns};
     return gridResult;
 

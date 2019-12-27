@@ -15,7 +15,28 @@ struct Grid gridForPinwheel;
 
 TEST_GROUP(Oscillator);
 
+void myPreDisplay() {
+    printf("\nGame Of Life\n");
+}
+
+void myPostDisplay() {
+    printf("^^^^^^^^^^^^^^\n");
+}
+
+void myDisplayCell(struct Point point, char mark) {
+    printf("%c", mark);
+}
+
+void myEndRow() {
+    printf("|\n");
+}
+
 TEST_SETUP(Oscillator) {
+    overridePreDisplay(myPreDisplay);
+    overridePostDisplay(myPostDisplay);
+    overrideDisplayCell(myDisplayCell);
+    overrideEndRow(myEndRow);
+
     gridForPinwheel = createEmptyGrid(12, 12);
 }
 TEST_TEAR_DOWN(Oscillator) {

@@ -1,7 +1,12 @@
 #include "render.h"
 #include <stdio.h>
 
-struct displayFunctionPointers defaultDisplayFunctionPointers = {
+void defaultPreDisplay();
+void defaultPostDisplay();
+void defaultDisplayCell(struct Point point, char mark);
+void defaultEndRow();
+
+struct displayFunctionPointers displayFunctionPointers = {
     &defaultPreDisplay,
     &defaultEndRow,
     &defaultPostDisplay,
@@ -10,16 +15,16 @@ struct displayFunctionPointers defaultDisplayFunctionPointers = {
 
 void display(struct Grid grid) {
     int c, r; 
-    (*defaultDisplayFunctionPointers.preDisplayFunction)();
+    (*displayFunctionPointers.preDisplayFunction)();
     for (r = 0; r < grid.numRows; r++) {
         for (c = 0; c < grid.numCols; c++) {
             struct Point point = {.x=c, .y=r};
             char x = getCell(grid, point);
-            (*defaultDisplayFunctionPointers.displayCellFunction)(point, x);
+            (*displayFunctionPointers.displayCellFunction)(point, x);
         }
-        (*defaultDisplayFunctionPointers.endRowFunction)();
+        (*displayFunctionPointers.endRowFunction)();
     }
-    (*defaultDisplayFunctionPointers.postDisplayFunction)();
+    (*displayFunctionPointers.postDisplayFunction)();
 }
 
 void defaultPreDisplay() {
@@ -41,6 +46,21 @@ void defaultEndRow() {
     printf("\n");
 }
 
+void overridePreDisplay(void* fptr) {
+    displayFunctionPointers.preDisplayFunction = fptr;
+}
+
+void overridePostDisplay(void* fptr) {
+    displayFunctionPointers.postDisplayFunction = fptr;
+}
+
+void overrideDisplayCell(void* fptr) {
+    displayFunctionPointers.displayCellFunction = fptr;
+}
+
+void overrideEndRow(void* fptr) {
+    displayFunctionPointers.endRowFunction = fptr;
+}
 
 void rowAsString(char* buffer, struct Grid grid, int rowIndex) {
     buffer[grid.numCols + 1] = 0;

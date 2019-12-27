@@ -13,10 +13,9 @@ struct displayFunctionPointers {
     void (*displayCellFunction)(struct Point point, char mark);
 };
 
-// TODO: struct of function pointers?
-void defaultPreDisplay();
-void defaultPostDisplay();
-void defaultDisplayCell(struct Point point, char mark);
-void defaultEndRow();
+void overridePreDisplay(void* fptr);
+void overridePostDisplay(void* fptr);
+void overrideDisplayCell(void* fptr);
+void overrideEndRow(void* fptr);
 
 #endif
