@@ -51,7 +51,8 @@ TEST(Grid, randomize_grid) {
 }
 
 TEST(Grid, set_grid_cell) {
-    setLivingCell(grid, (struct Point){.x=1, .y=2});
+    display(grid);
+    setLivingCell(grid, (struct Point){.x=1, .y=2});  // good
     TEST_ASSERT_EQUAL('X', getCell(grid, (struct Point){.x=1, .y=2}));
 }
 
@@ -66,10 +67,7 @@ TEST(Grid, top_left_cell_has_one_living_neighbor) {
 }
 
 TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
-    display(grid);
     setLivingCell(grid, (struct Point){.x=3, .y=1});
-    display(grid);
-
     TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=3, .y=2}));
 }
 

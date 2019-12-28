@@ -19,8 +19,8 @@ void display(struct Grid grid) {
     for (r = 0; r < grid.numRows; r++) {
         for (c = 0; c < grid.numCols; c++) {
             struct Point point = {.x=c, .y=r};
-            char x = getCell(grid, point);
-            (*displayFunctionPointers.displayCellFunction)(point, x);
+            char mark = getCell(grid, point);
+            (*displayFunctionPointers.displayCellFunction)(point, mark);
         }
         (*displayFunctionPointers.endRowFunction)();
     }
