@@ -9,17 +9,16 @@
 
 void tick(struct Grid grid) {
 
-    // char gridBufferForUpdate[grid.numCols][grid.numRows];
-    // struct Grid updatedGrid = {gridBufferForUpdate, grid.numCols, grid.numRows};
-    // for(int c = 0; c < grid.numCols; ++c) {
-    //     for(int r = 0; r < grid.numRows; ++r) {
-    //         struct Point point = {.x=c, .y=r};
-    //         int neighborCount = count_neighbors(grid, point);
-    //         bool aliveNow = isAlive(grid, point);
-    //         setCell(updatedGrid, point, cell_alive(aliveNow, neighborCount));
-    //     }
-    // }
-    // memcpy(grid.data, &updatedGrid, sizeof(char) * grid.numRows * grid.numRows);
-
+    char gridBufferForUpdate[grid.numCols][grid.numRows];
+    struct Grid updatedGrid = {(char*)gridBufferForUpdate, grid.numCols, grid.numRows};
+    for(int c = 0; c < grid.numCols; ++c) {
+        for(int r = 0; r < grid.numRows; ++r) {
+            struct Point point = {.x=c, .y=r};
+            int neighborCount = count_neighbors(grid, point);
+            bool aliveNow = isAlive(grid, point);
+            setCell(updatedGrid, point, cell_alive(aliveNow, neighborCount));
+        }
+    }
+    memcpy(grid.data, &gridBufferForUpdate, sizeof(char) * grid.numRows * grid.numRows);
 }
 

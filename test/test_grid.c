@@ -11,8 +11,6 @@
 #include "neighbor_counter.h"
 #include "support.h"
 
-// void verifyGrid(struct Grid grid, ...);
-
 const int numColsForGridTests = 4;
 const int numRowsForGridTests = 3;
 char gridData[numRowsForGridTests][numColsForGridTests];
@@ -51,7 +49,6 @@ TEST(Grid, randomize_grid) {
 }
 
 TEST(Grid, set_grid_cell) {
-    display(grid);
     setLivingCell(grid, (struct Point){.x=1, .y=2});  // good
     TEST_ASSERT_EQUAL('X', getCell(grid, (struct Point){.x=1, .y=2}));
 }
@@ -71,65 +68,64 @@ TEST(Grid, bottom_right_cell_has_one_living_neighbor) {
     TEST_ASSERT_EQUAL(1, count_neighbors(grid, (struct Point){.x=3, .y=2}));
 }
 
-// TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
-// {
-//     setLivingCell(grid, (struct Point){.x=0, .y=0});
-//     tick(&grid);
-//     TEST_ASSERT_FALSE(isAlive(grid, (struct Point){0, 0}));
+TEST(Grid, live_cell_with_fewer_than_two_neighbors_dies)
+{
+    setLivingCell(grid, (struct Point){.x=0, .y=0});
+    tick(grid);
+    TEST_ASSERT_FALSE(isAlive(grid, (struct Point){0, 0}));
+}
 
-// }
+TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
+{
+    setGrid(grid,
+        "XX  ",
+        "X   ",
+        "    "
+    );
+    tick(grid);
+    TEST_ASSERT_TRUE(isAlive(grid, (struct Point){0, 0}));
+}
 
-// TEST(Grid, live_cell_with_two_or_three_neighbors_survives)
-// {
-//     setGrid(grid,
-//         "XX  ",
-//         "X   ",
-//         "    "
-//     );
-//     tick(&grid);
-//     TEST_ASSERT_TRUE(isAlive(grid, (struct Point){0, 0}));
-// }
+TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
+{
+    setGrid(grid,
+        "XXX.",
+        "XXX.",
+        "...."
+    );
 
-// TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
-// {
-//     setGrid(grid,
-//         "XXX.",
-//         "XXX.",
-//         "...."
-//     );
+    tick(grid);
 
-//     tick(&grid);
-    
-//     verifyGrid(grid,
-//         "X.X.",
-//         "X.X.",
-//         ".X.."
-//     );
-//     TEST_ASSERT_FALSE(isAlive(grid, (struct Point){.x=1, .y=0}));
-// }
+    verifyGrid(grid,
+        "X.X.",
+        ".X.X",
+        "...."
+    );
+    TEST_ASSERT_FALSE(isAlive(grid, (struct Point){.x=1, .y=0}));
+}
 
-// TEST(Grid, dead_cell_with_three_neighbors_becomes_live)
-// {
-//    setGrid(grid,
-//         "X   ",
-//         "XX  ",
-//         "    "
-//     );
-//     tick(&grid);
-//     TEST_ASSERT_TRUE(isAlive(grid, (struct Point){1, 0}));
+TEST(Grid, dead_cell_with_three_neighbors_becomes_live)
+{
+   setGrid(grid,
+        "X   ",
+        "XX  ",
+        "    "
+    );
+    tick(grid);
+    TEST_ASSERT_TRUE(isAlive(grid, (struct Point){1, 0}));
 
-// }
+}
 
-// TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
-// {
-//     setGrid(grid,
-//         "XX  ",
-//         "    ",
-//         "    "
-//     );
-//     tick(&grid);
-//     TEST_ASSERT_FALSE(isAlive(grid, (struct Point){1, 0}));
-// }
+TEST(Grid, dead_cell_with_two_neighbors_stays_dead)
+{
+    setGrid(grid,
+        "XX  ",
+        "    ",
+        "    "
+    );
+    tick(grid);
+    TEST_ASSERT_FALSE(isAlive(grid, (struct Point){1, 0}));
+}
 
 
 TEST_GROUP_RUNNER(Grid)
@@ -141,10 +137,10 @@ TEST_GROUP_RUNNER(Grid)
     RUN_TEST_CASE(Grid, top_left_cell_has_one_living_neighbor);
     RUN_TEST_CASE(Grid, bottom_right_cell_has_one_living_neighbor);
 
-    // RUN_TEST_CASE(Grid, live_cell_with_fewer_than_two_neighbors_dies);
-    // RUN_TEST_CASE(Grid, live_cell_with_two_or_three_neighbors_survives);
-    // RUN_TEST_CASE(Grid, live_cell_with_more_than_three_neighbors_dies);
-    // RUN_TEST_CASE(Grid, dead_cell_with_three_neighbors_becomes_live);
-    // RUN_TEST_CASE(Grid, dead_cell_with_two_neighbors_stays_dead);
+    RUN_TEST_CASE(Grid, live_cell_with_fewer_than_two_neighbors_dies);
+    RUN_TEST_CASE(Grid, live_cell_with_two_or_three_neighbors_survives);
+    RUN_TEST_CASE(Grid, live_cell_with_more_than_three_neighbors_dies);
+    RUN_TEST_CASE(Grid, dead_cell_with_three_neighbors_becomes_live);
+    RUN_TEST_CASE(Grid, dead_cell_with_two_neighbors_stays_dead);
 
 }
