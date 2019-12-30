@@ -98,7 +98,7 @@ TEST(Grid, live_cell_with_more_than_three_neighbors_dies)
     verifyGrid(grid,
         "X.X.",
         "X.X.",
-        "...."
+        ".X.."
     );
     TEST_ASSERT_FALSE(isAlive(grid, (struct Point){.x=1, .y=0}));
 }

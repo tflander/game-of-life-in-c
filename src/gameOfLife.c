@@ -19,6 +19,6 @@ void tick(struct Grid grid) {
             setCell(updatedGrid, point, cell_alive(aliveNow, neighborCount));
         }
     }
-    memcpy(grid.data, &gridBufferForUpdate, sizeof(char) * grid.numRows * grid.numRows);
+    memcpy(grid.data, &gridBufferForUpdate, sizeof(char) * grid.numRows * grid.numCols);
 }
 

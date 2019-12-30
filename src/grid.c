@@ -12,12 +12,10 @@ bool isAlive(struct Grid grid, struct Point point) {
 
 void setCell(struct Grid grid, struct Point point, bool isLive) {
     char mark = isLive ? 'X' : ' ';
-    // *((grid.data + point.x * grid.numRows) + point.y) = mark;
     *((grid.data + point.y * grid.numCols) + point.x) = mark;
 }
 
 char getCell(struct Grid grid, struct Point point) {
-    // return *((grid.data + point.x * grid.numRows) + point.y);
     return *((grid.data + point.y * grid.numCols) + point.x);
 }
 
