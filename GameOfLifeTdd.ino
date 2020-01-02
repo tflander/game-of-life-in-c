@@ -25,11 +25,6 @@ void postDisplay();
 void displayCell(struct Point point, char mark);
 void endRow();
 
-void xpreDisplay();
-void xpostDisplay();
-void xdisplayCell(struct Point point, char mark);
-void xendRow();
-
 void setup() {
   Serial.begin(9600);
   delay(analogRead(0));
@@ -39,54 +34,32 @@ void setup() {
   strip.setBrightness(20);
   strip.begin();
 
-  overridePreDisplay(xpreDisplay);
-  overridePostDisplay(xpostDisplay);
-  overrideDisplayCell(xdisplayCell);
-  overrideEndRow(xendRow);
-}
+  struct displayFunctionPointers fp = {};
 
+  fp.displayCellFunction = displayCell;
+  fp.preDisplayFunction = preDisplay;
+  fp.endRowFunction = endRow;
+  fp.postDisplayFunction = postDisplay;
+  overrideDisplay(fp);
+}
+ 
 void loop() {
   display(grid);
   tick(grid);
   delay(1000);
 }
 
-//#ifdef IS_PIL
 void preDisplay() {
-  Serial.println("\n\n\n\n");  
-  xpreDisplay();
 }
 
 void postDisplay() {
-  xpostDisplay();
-}
-
-void displayCell(struct Point point, char mark) {
-  if(mark == ' ') mark = '.';
-  Serial.print(mark); 
-  xdisplayCell(point, mark);
-}
-
-void endRow() {
-  Serial.println("");  
-  xendRow();
-}
-
-//#else
-
-void xpreDisplay() {
-}
-
-void xpostDisplay() {
     strip.show();
 }
 
-void xdisplayCell(struct Point point, char mark) {
+void displayCell(struct Point point, char mark) {
   int pixel = strandOffsetForPoint(grid, point);
   strip.setPixelColor(pixel, mark=='X' ? liveColor : deadColor);
 }
 
-void xendRow() {
+void endRow() {
 }
-
-//#endif
