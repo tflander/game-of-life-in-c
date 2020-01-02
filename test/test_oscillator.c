@@ -34,10 +34,6 @@ void myEndRow() {
 }
 
 TEST_SETUP(Oscillator) {
-    // overridePreDisplay(myPreDisplay);
-    // overridePostDisplay(myPostDisplay);
-    // overrideDisplayCell(myDisplayCell);
-    // overrideEndRow(myEndRow);
 
     struct displayFunctionPointers fp = {
         .displayCellFunction = myDisplayCell,
