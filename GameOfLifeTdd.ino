@@ -1,15 +1,11 @@
 #include <Adafruit_NeoPixel.h>
 
 extern "C" {
-  #include <neighbor_counter.h>
-  #include <grid.h>
-  #include <rules.h>
   #include <neopixel_adapter.h>
   #include <render.h>
   #include <gameOfLife.h>
 }
 
-//#define IS_PIL -1
 #define LED_PIN 6
 
 uint32_t liveColor = Adafruit_NeoPixel::Color(0,0,255);
