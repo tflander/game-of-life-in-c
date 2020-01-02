@@ -34,10 +34,19 @@ void myEndRow() {
 }
 
 TEST_SETUP(Oscillator) {
-    overridePreDisplay(myPreDisplay);
-    overridePostDisplay(myPostDisplay);
-    overrideDisplayCell(myDisplayCell);
-    overrideEndRow(myEndRow);
+    // overridePreDisplay(myPreDisplay);
+    // overridePostDisplay(myPostDisplay);
+    // overrideDisplayCell(myDisplayCell);
+    // overrideEndRow(myEndRow);
+
+    struct displayFunctionPointers fp = {
+        .displayCellFunction = myDisplayCell,
+        .preDisplayFunction = myPreDisplay,
+        .endRowFunction = myEndRow,
+        .postDisplayFunction = myPostDisplay
+
+    };
+    overrideDisplay(fp);
 
     wipeGrid(gridForPinwheel);
 }

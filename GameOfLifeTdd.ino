@@ -13,7 +13,7 @@ extern "C" {
 #define LED_PIN 6
 
 uint32_t liveColor = Adafruit_NeoPixel::Color(0,0,255);
-uint32_t deadColor = Adafruit_NeoPixel::Color(128,0,0);
+uint32_t deadColor = Adafruit_NeoPixel::Color(64,0,0);
 const int numCols = 23;
 const int numRows = 10;
 char gridData[numRows][numCols];

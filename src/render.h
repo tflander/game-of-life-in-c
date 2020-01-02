@@ -13,9 +13,6 @@ struct displayFunctionPointers {
     void (*displayCellFunction)(struct Point point, char mark);
 };
 
-void overridePreDisplay(void* fptr);
-void overridePostDisplay(void* fptr);
-void overrideDisplayCell(void* fptr);
-void overrideEndRow(void* fptr);
+void overrideDisplay(struct displayFunctionPointers fp);
 
 #endif

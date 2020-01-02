@@ -46,21 +46,24 @@ void defaultEndRow() {
     printf("\n");
 }
 
-void overridePreDisplay(void* fptr) {
-    displayFunctionPointers.preDisplayFunction = fptr;
+void overrideDisplay(struct displayFunctionPointers fp) {
+    if(fp.displayCellFunction) {
+        displayFunctionPointers.displayCellFunction = fp.displayCellFunction;
+    }
+
+    if(fp.preDisplayFunction) {
+        displayFunctionPointers.preDisplayFunction = fp.preDisplayFunction;
+    }
+
+    if(fp.endRowFunction) {
+        displayFunctionPointers.endRowFunction = fp.endRowFunction;
+    }
+
+    if(fp.postDisplayFunction) {
+        displayFunctionPointers.postDisplayFunction = fp.postDisplayFunction;
+    }
 }
 
-void overridePostDisplay(void* fptr) {
-    displayFunctionPointers.postDisplayFunction = fptr;
-}
-
-void overrideDisplayCell(void* fptr) {
-    displayFunctionPointers.displayCellFunction = fptr;
-}
-
-void overrideEndRow(void* fptr) {
-    displayFunctionPointers.endRowFunction = fptr;
-}
 
 // TODO: move to test support
 void rowAsString(char* buffer, struct Grid grid, int rowIndex) {
